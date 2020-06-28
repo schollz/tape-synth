@@ -1,4 +1,4 @@
-module github.com/schollz/cassettesynthesizer
+module github.com/schollz/tape-synth
 
 go 1.14
 
