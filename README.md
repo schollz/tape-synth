@@ -59,80 +59,25 @@ Put in a tape and record via the line in! Record anything you want, usually a si
 
 ![Recording a drone from my OP-1 to the tape.](https://schollz.com/img/s1/rec.jpg)
 
-## Setup an Arduino
+## Setup an Arduino as MIDI interface
 
-Simply connect the Arduino to the MCP4725. The MCP4725 is a digital-to-analog converter (DAC) that allows modulating specific voltages directly from the Arduino. 
+The Arduino serves as a bridge between MIDI and the voltage. A MIDI keyboard is plugged into a computer and a Chrome browser gets the response. The browser executes a request to a server running which sends the serial information for the voltage change to the Arduino, which then modulates the voltage on the walkman.
 
 ![Connecting the MCP4725 DAC to the Arduino](https://schollz.com/img/s1/arduino.png)
 
 The `OUT` from the MCP4725 should go to the RED wire you connected to the cassette player. Then attach the ground wire on the cassette player to the ground on the Arduino.
 
-The code for the Arduino just communicates via a Serial port to send voltages.
+The code for the Arduino just communicates via a Serial port to send voltages. Just upload `voltage.ino` to an Arduino and you should be all set.
 
-Here is the code:
+### Server to send serial commands
 
-
-```c
-#include <Wire.h>
-#include <Adafruit_MCP4725.h>
-
-Adafruit_MCP4725 dac;
-String sdata = ""; // Initialised to nothing.
-bool started = false;
-void setup(void) {
-  Serial.begin(9600);
-
-  // For Adafruit MCP4725A1 the address is 0x62 (default) or 0x63 (ADDR pin tied to VCC)
-  // For MCP4725A0 the address is 0x60 or 0x61
-  // For MCP4725A2 the address is 0x64 or 0x65
-  dac.begin(0x62);
-  pinMode(2, OUTPUT);
-  pinMode(3, OUTPUT);
-
-  Serial.println("Begin");
-}
-
-void loop(void) {
-  if (started == false) {
-    started = true;
-    dac.setVoltage(0, 1);
-    digitalWrite(2, LOW);
-    digitalWrite(3, LOW);
-  }
-  byte ch;
-  if (Serial.available()) {
-    ch = Serial.read();
-    sdata += (char)ch;
-    if (ch == '\n') {
-      sdata.trim();
-      if (sdata.indexOf("voltage") > -1) {
-        sdata.remove(0, 7);
-        float newVal = sdata.toFloat();
-        // set voltage
-        float newVoltage = round(910.0 * newVal);
-        if (newVoltage > 4095) {
-          newVoltage = 4095;
-        }
-        uint16_t newVolts = uint16_t(newVoltage);
-        dac.setVoltage(newVolts, 1);
-        Serial.print("volts: ");
-        Serial.println(newVolts);
-      } else {
-        Serial.println("?");
-      }
-      sdata = "";
-    }
-  }
-}
-```
-
-To communicate with the Arduino you can use a simple server that hooks the MIDI to the voltage Serial. You can get this code from https://github.com/schollz/cassettesynthesizer. Make sure you have Golang installed (install [here](https://golang.org/dl/)).
+To communicate with the Arduino you can use a simple server that hooks the MIDI to the voltage Serial. You can get this code from https://github.com/schollz/tape-synth. Make sure you have Golang installed (install [here](https://golang.org/dl/)).
 
 ```bash
-$ git clone https://github.com/schollz/cassettesynthesizer
-$ cd cassettesynthesizer
+$ git clone https://github.com/schollz/tape-synth
+$ cd tape-synth
 $ go build  
-$ ./cassettesynthesizer -com ARDUINOCOM
+$ ./tape-synth -com ARDUINOCOM
 ```
 
 Now you can open up Chrome to `localhost:8080` and you'll be able to connect a MIDI keyboard and send voltages to the Arduino. Make sure to edit the voltage map to tune each note of the cassette synthesizer, in `index.html`:
