@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/webmidi"></script>
+</head>
+
+<body>
+    <script>
+    // YOU NEED TO EDIT THESE NUMBERS TO
+    // GET THE CORRECT PITCH
+    var voltageMap = {
+        "C": 0,
+        "C#": 0.7,
+        "D": 0.9,
+        "D#": 1.2,
+        "E": 1.4,
+        "F": 1.62,
+        "F#": 1.85,
+        "G": 2.25,
+        "G#": 2.6,
+        "A": 3.0,
+        "A#": 0,
+        "B": 0,
+    }
+
+    var inputs = [];
+    WebMidi.enable(function(err) {
+        -
+        if (err) {
+            console.log("WebMidi could not be enabled.", err);
+        }
+        for (var i = 0; i < WebMidi.inputs.length; i++) {
+            inputs[i].addListener('noteon', "all",
+                function(e) {
+                    fetch(`/msg?msg=voltage${voltageMap[e.note.name]}`)
+                        .then(response => response.json())
+                        .then(data => console.log(data));
+                }
+            );
+        }
+    });
+    </script>
+</body>
+
+</html>
