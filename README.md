@@ -2,7 +2,7 @@
 
 I got this idea for the cassette synthesizer from [Onde Magnétique](http://www.ondemagnetique.com/) who got the idea from the [Mellotron](http://www.mellotron.com/). The idea is that you can record a single drone onto a tape and then play that back at various speeds to modulate the pitch. 
 
-The neat thing about this synthesizer is that it has a very "analog" quality to the changing of notes - the pitch often *slides* between notes in a neat way. This pitch sliding is often refereed to as [*portamento*](https://en.wikipedia.org/wiki/Portamento). It also is versatile because you can record *any* sound to the tape and use that as your synthesizer.
+The neat thing about this synthesizer is that it has a very "analog" quality to the changing of notes - the pitch often *slides* between notes in a neat way. This pitch sliding is called [*portamento*](https://en.wikipedia.org/wiki/Portamento). It also is versatile because you can record *any* sound to the tape and use that as your synthesizer.
 
 Here's what it sounds like with the "angry bees" synth sample applied to the tape. The video shows me playing another synth which is not producing any sound and only controlling the cassette player via MIDI:
 
