@@ -33,7 +33,7 @@ _Note:_ You don't necessarily have to use the GE 3-5362A. Any walkman with a var
 
 First thing is to open up the walkman. There are four screws on the back. Just unscrew them and open it carefully. The power lines are connected on the back plate so just don't rip those out.
 
-![Hacking the GE 3-5362A walkman.](/img/s1/overview.jpg)
+![Hacking the GE 3-5362A walkman.](https://schollz.com/img/s1/overview.jpg)
 
 To get this walkman working for us we will solder two new components. First we will solder in the `Vin` which will allow us to control the speed of the cassette player with a voltage. Then we will add a `Line in` which will let us record directly onto tape (in case you don't have a tape deck).
 
@@ -43,7 +43,7 @@ If you don't know how to solder - don't sweat. Its easy. Check out [this video](
 
 Locate the dial that says "Variable Speed Playback". This is where we will splice in two lines. I like to use red for active and brown/green for ground. Attach the active line to `VS+` and the ground to the pad right below the one labeled `B+`.
 
-![Solder a cable to VS+ and one to the pad next to B+.](/img/s1/vs.jpg)
+![Solder a cable to VS+ and one to the pad next to B+.](https://schollz.com/img/s1/vs.jpg)
 
 A note - I like to use jumper cables that have a female end so I can easily plug stuff into here!
 
@@ -51,19 +51,19 @@ A note - I like to use jumper cables that have a female end so I can easily plug
 
 Locate the red and black cables plugged into pads labeled "MIC-" and "MIC+". You can solder and remove these cables and attach your own from the audio breakout cable. Just solder red to "MIC+" and black to "MIC-".
 
-![Solder a line-in via the MIC- and MIC+.](/img/s1/linein.jpg)
+![Solder a line-in via the MIC- and MIC+.](https://schollz.com/img/s1/linein.jpg)
 
 ### Record the tape
 
 Put in a tape and record via the line in! Record anything you want, usually a single drone on C works well as a starting point. Record a long time - 30 minutes or so (this would be a good place for tape loops if you have them!).
 
-![Recording a drone from my OP-1 to the tape.](/img/s1/rec.jpg)
+![Recording a drone from my OP-1 to the tape.](https://schollz.com/img/s1/rec.jpg)
 
 ## Setup an Arduino
 
 Simply connect the Arduino to the MCP4725. The MCP4725 is a digital-to-analog converter (DAC) that allows modulating specific voltages directly from the Arduino. 
 
-![Connecting the MCP4725 DAC to the Arduino](/img/s1/arduino.png)
+![Connecting the MCP4725 DAC to the Arduino](https://schollz.com/img/s1/arduino.png)
 
 The `OUT` from the MCP4725 should go to the RED wire you connected to the cassette player. Then attach the ground wire on the cassette player to the ground on the Arduino.
 
